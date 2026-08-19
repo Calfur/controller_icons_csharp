@@ -474,16 +474,17 @@ public partial class ControllerIcons : Node
 			return null;
 
 		List<string> basePaths = new(){
-			Settings.custom_asset_dir + "/",
-			"res://addons/controller_icons/assets/"
+			Settings.custom_asset_dir,
+			"res://addons/controller_icons/assets"
 		};
 
-		foreach( string basePath in basePaths )
+		foreach( string rawBasePath in basePaths )
 		{
+			string basePath = rawBasePath.SimplifyPath();
 			if( string.IsNullOrWhiteSpace(basePath) )
 				continue;
 
-			string dictPath = basePath + path + "." + BaseExtension;
+			string dictPath = basePath.PathJoin( $"{path}.{BaseExtension}" );
 			if( LoadIcon(dictPath) != Error.Ok )
 				continue;
 
