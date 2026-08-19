@@ -616,6 +616,7 @@ public partial class ControllerIconTexture : Texture2D
 		IsStitchingTexture = false;
 
 		Dirty = false;
+		img.GenerateMipmaps();
 		Texture3D = ImageTexture.CreateFromImage(img);
 		EmitChanged();
 	}
