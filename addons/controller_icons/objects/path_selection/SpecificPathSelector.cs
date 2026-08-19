@@ -110,7 +110,7 @@ public partial class SpecificPathSelector : SelectorPanel
 		{
 			Category = category;
 			Filtered = true;
-			Path = path.Split("/")[1];
+			Path = path.GetSlice("/", 1);
 
 			Button = new()
 			{
@@ -233,7 +233,7 @@ public partial class SpecificPathSelector : SelectorPanel
 		string filename = path.GetFile();
 		if( ButtonNodes[mapCategory].ContainsKey(filename) ) return;
 
-		string icon_path = (category.Length == 0 ? "" : category ) + "/" + path.GetFile().GetBaseName();
+		string icon_path = (category.Length == 0 ? "" : category + "/") + path.GetFile().GetBaseName();
 		ControllerIcons_Icon icon = new( mapCategory, icon_path);
 
 		ButtonNodes[mapCategory][filename] = icon;
