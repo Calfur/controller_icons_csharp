@@ -198,7 +198,7 @@ public partial class ControllerIconTexture : Texture2D
 	public string GetTTSString()
 	{
 		if( force_type != EInputType.NONE )
-			return CI.ParsePathToTTS(path, force_type - 1);
+			return CI.ParsePathToTTS(path, force_type);
 		else
 			return CI.ParsePathToTTS(path);
 	}
