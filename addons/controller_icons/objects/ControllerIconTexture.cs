@@ -443,9 +443,9 @@ public partial class ControllerIconTexture : Texture2D
 				);
 
 				DrawText(toCanvasItem, font_position, "+");
+				position += new Vector2(TextSize.X, 0);
 			}
 
-			position += new Vector2(TextSize.X, 0);
 			tex.Draw(toCanvasItem, position, modulate, transpose);
 			position += new Vector2( tex.GetWidth(), 0 );
 		}
