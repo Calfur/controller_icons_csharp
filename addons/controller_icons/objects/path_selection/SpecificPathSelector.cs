@@ -110,7 +110,8 @@ public partial class SpecificPathSelector : SelectorPanel
 		{
 			Category = category;
 			Filtered = true;
-			Path = path.GetSlice("/", 1);
+			var parts = path.Split('/');
+			Path = parts.Length > 1 ? parts[1] : path;
 
 			Button = new()
 			{
