@@ -201,13 +201,13 @@ public partial class ControllerIcons : Node
 		if( Settings?.custom_mapper == null )
 			return;
 
-		GodotObject instance;
+		Variant created;
 		if( Settings.custom_mapper is CSharpScript csharpScript )
-			instance = csharpScript.New();
+			created = csharpScript.New();
 		else
-			instance = Settings.custom_mapper.Call("new").AsGodotObject();
+			created = Settings.custom_mapper.Call("new");
 
-		if( instance is ControllerMapper mapper )
+		if( created.AsGodotObject() is ControllerMapper mapper )
 			Mapper = mapper;
 		else
 			GD.PrintErr("Controller Icons: custom_mapper must extend ControllerMapper.");
