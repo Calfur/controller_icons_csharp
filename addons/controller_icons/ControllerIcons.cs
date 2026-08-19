@@ -184,6 +184,7 @@ public partial class ControllerIcons : Node
 		Input.JoyConnectionChanged += OnJoyConnectionChangedEventHandler;
 
 		Settings ??= new();
+		ApplyCustomMapper();
 		Mapper ??= new();
 
 		if( !string.IsNullOrWhiteSpace(Settings.custom_file_extension) )
@@ -193,6 +194,23 @@ public partial class ControllerIcons : Node
 
 		// Wait a frame to give a chance for the app to initialize
 		setLikelyInput = true;
+	}
+
+	private void ApplyCustomMapper()
+	{
+		if( Settings?.custom_mapper == null )
+			return;
+
+		GodotObject instance;
+		if( Settings.custom_mapper is CSharpScript csharpScript )
+			instance = csharpScript.New();
+		else
+			instance = Settings.custom_mapper.Call("new").AsGodotObject();
+
+		if( instance is ControllerMapper mapper )
+			Mapper = mapper;
+		else
+			GD.PrintErr("Controller Icons: custom_mapper must extend ControllerMapper.");
 	}
 	private void OnJoyConnectionChangedEventHandler( long device, bool connected )
 	{
