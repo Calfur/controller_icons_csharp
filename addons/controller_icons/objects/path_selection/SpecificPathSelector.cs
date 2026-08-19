@@ -251,9 +251,9 @@ public partial class SpecificPathSelector : SelectorPanel
 		return "";
 	}
 
-	public override void GrabFocus()
+	public override void GrabFocus( bool hideFocus = false )
 	{
-		NameFilter.GrabFocus();
+		GrabFocusOn( NameFilter, hideFocus );
 	}
 
 	private void OnBaseAssetNamesItemSelected()
