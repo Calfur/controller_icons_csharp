@@ -422,6 +422,7 @@ public partial class ControllerIcons : Node
 				if( LoadIcon( iconPath ) == Error.Ok )
 				{
 					icons.Add( _CachedIcons[iconPath] );
+					break;
 				}
 			}
 		}
