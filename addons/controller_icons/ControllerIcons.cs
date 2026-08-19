@@ -304,10 +304,9 @@ public partial class ControllerIcons : Node
 				if( f.Target != null && f.Delegate != null ) 
 					f.Call();
 			}
+			_CachedCallables.Clear();
+			_CachedCallablesLock.Unlock();
 		}
-
-		_CachedCallables.Clear();
-		_CachedCallablesLock.Unlock();
 	}
 
 	private void AddCustomInputAction( string input_action , Godot.Collections.Array<InputEvent> events )
