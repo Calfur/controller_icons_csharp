@@ -314,7 +314,7 @@ public partial class ControllerIcons : Node
 		CustomInputActions[input_action] = events;
 	}
 
-	private void refresh()
+	public void Refresh()
 	{
 		// All it takes is to signal icons to refresh paths		
 	#if GODOT4_4_OR_GREATER
