@@ -861,16 +861,24 @@ public partial class ControllerIcons : Node
 		switch( axis )
 		{
 			case JoyAxis.LeftX:
-				path = axisValue < 0 ? "joypad/l_stick_left" : "joypad/l_stick_right";
+				path = axisValue < 0 ? "joypad/l_stick_left"
+					: axisValue > 0 ? "joypad/l_stick_right"
+					: "joypad/l_stick_horizontal";
 				break;
 			case JoyAxis.LeftY:
-				path = axisValue < 0 ? "joypad/l_stick_up" : "joypad/l_stick_down";
+				path = axisValue < 0 ? "joypad/l_stick_up"
+					: axisValue > 0 ? "joypad/l_stick_down"
+					: "joypad/l_stick_vertical";
 				break;
 			case JoyAxis.RightX:
-				path = axisValue < 0 ? "joypad/r_stick_left" : "joypad/r_stick_right";
+				path = axisValue < 0 ? "joypad/r_stick_left"
+					: axisValue > 0 ? "joypad/r_stick_right"
+					: "joypad/r_stick_horizontal";
 				break;
 			case JoyAxis.RightY:
-				path = axisValue < 0 ? "joypad/r_stick_up" : "joypad/r_stick_down";
+				path = axisValue < 0 ? "joypad/r_stick_up"
+					: axisValue > 0 ? "joypad/r_stick_down"
+					: "joypad/r_stick_vertical";
 				break;
 			case JoyAxis.TriggerLeft:
 				path = "joypad/lt";

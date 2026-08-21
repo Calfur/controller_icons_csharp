@@ -120,6 +120,8 @@ public partial class ControllerMapper : RefCounted
 			"r_stick_down" => path.Replace("/r_stick_down", "/right_track_down"),
 			"r_stick_left" => path.Replace("/r_stick_left", "/right_track_left"),
 			"r_stick_right" => path.Replace("/r_stick_right", "/right_track_right"),
+			"r_stick_horizontal" => path.Replace("/r_stick_horizontal", "/right_track"),
+			"r_stick_vertical" => path.Replace("/r_stick_vertical", "/right_track"),
 			_ => path,
 		};
 	}

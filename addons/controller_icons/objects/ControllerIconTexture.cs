@@ -41,8 +41,8 @@ public partial class ControllerIconTexture : Texture2D
 	// # "A" on Xbox, "B" on Nintendo
 	// path = "ui_accept"
 	// [/codeblock]
-	// [b]- Joypad Path[/b]: Specify a generic joypad path resembling the layout of a
-	// Xbox 360 controller, starting with the [code]joypad/[/code] prefix. The icon will only
+	// [b]- Joypad Path[/b]: Specify a generic joypad path resembling a standard controller layout,
+	// starting with the [code]joypad/[/code] prefix. The icon will only
 	// display controller icons, but it will still change according to the controller type.
 	// [codeblock]
 	// # "Square" on Sony, "X" on Xbox, "Y" on Nintendo
