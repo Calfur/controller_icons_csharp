@@ -152,6 +152,7 @@ public partial class ControllerMapper : RefCounted
 		path = ConvertJoypadToSwitch(path);
 		return path.Substring(path.Find("/") + 1) switch
 		{
+			"controller" => path.Replace("switch/controller", "joycon/controller"),
 			"dpad_up" => path.Replace("/dpad_up", "/up"),
 			"dpad_down" => path.Replace("/dpad_down", "/down"),
 			"dpad_left" => path.Replace("/dpad_left", "/left"),

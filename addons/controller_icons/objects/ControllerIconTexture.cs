@@ -48,6 +48,10 @@ public partial class ControllerIconTexture : Texture2D
 	// # "Square" on Sony, "X" on Xbox, "Y" on Nintendo
 	// path = "joypad/x"
 	// [/codeblock]
+	// [codeblock]
+	// # Full silhouette for the detected controller
+	// path = "joypad/controller"
+	// [/codeblock]
 	// [b]- Specific Path[/b]: Specify a direct asset path from the addon assets.
 	// With this path type, there is no dynamic remapping, and the icon will always
 	// remain the same. The path to use is the path to an icon file, minus the base
@@ -93,8 +97,7 @@ public partial class ControllerIconTexture : Texture2D
 	//[br][br]
 	// This will override force_device if set to a value other than NONE.
 	//[br][br]
-	// This is only relevant for paths using input actions, and has no effect on
-	// other scenarios.
+	// This applies to input actions and generic joypad paths.
 	[Export]
 	public ControllerSettings.Devices force_controller_icon_style { 
 		get 
