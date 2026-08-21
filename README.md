@@ -54,10 +54,9 @@ In theory, no. However, I have only done the bare-bones testing of the deprecate
 
 The addon is licensed under the MIT license. Full details at [LICENSE](LICENSE). Original License at [ORIGINAL LICENSE](ORIGINAL_LICENSE). Original plugin by [Ricardo Subtil (rsubtil)](https://github.com/rsubtil).
 
-### Additional credits (taken from rsubtil's repo):
-The controller assets are [Xelu's FREE Controllers & Keyboard PROMPTS](https://thoseawesomeguys.com/prompts/), made by Nicolae (XELU) Berbece and under Creative Commons 0 _(CC0)_. Some extra icons were created and contributed to this addon, also on the same CC0 license:
+### Additional credits:
+Controller prompt assets are from [Kenney's Input Prompts](https://kenney.nl/assets/input-prompts) (v1.5), under Creative Commons 0 _(CC0)_. See `addons/controller_icons/assets/KENNEY_LICENSE.txt`.
 
-- [@TacticalLaptopBag](https://github.com/TacticalLaptopBag): Apostrophe, backtick, comma, equals, forward slash and period keys.
-- [@DataPlusProgram](https://github.com/DataPlusProgram): Mouse wheel up and down, mouse side buttons up and down.
+Legacy brands (Xbox 360/One as separate sets, PS3/PS4, Luna, Stadia, OUYA) were dropped in favor of Kenney's consolidated Xbox Series, PlayStation Series, Switch, Steam, and Steam Deck packs. Analog stick icons now include directional variants.
 
-The original icon was designed by [@adambelis](https://github.com/adambelis) ([#5](https://github.com/rsubtil/controller_icons/pull/5)) and is under Creative Commons 0 _(CC0)_. It uses the [Godot's logo](https://github.com/godotengine/godot/blob/master/icon.svg) which is under Creative Commons Attribution 4.0 International License _(CC-BY-4.0 International)_. I just added the C# to it, and this version is also under the Creative Commons 0 _(CC0)_.
+The original icon was designed by [@adambelis](https://github.com/adambelis) ([#5](https://github.com/rsubtil/controller_icons/pull/5)) and is under Creative Commons 0 _(CC0)_. It uses the [Godot's logo](https://github.com/godotengine/godot/blob/main/icon.svg) which is under Creative Commons Attribution 4.0 International License _(CC-BY-4.0 International)_. The C# variant is also under Creative Commons 0 _(CC0)_.

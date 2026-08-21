@@ -15,6 +15,7 @@ public partial class JoypadPathSelector : SelectorPanel
 
 	private Button LastPressedButton;
 	private ulong LastPressedTimestamp;
+	private string MotionOverridePath = "";
 
 	public override void _Ready()
 	{
@@ -36,19 +37,23 @@ public partial class JoypadPathSelector : SelectorPanel
 		// UPGRADE: In Godot 4.2, for-loop variables can be
 		// statically typed:
 		// for button:Button in button_nodes:
+		MotionOverridePath = "";
 		foreach( Button button in ButtonNodes )
 			button.ButtonPressed = false;
 	}
 
 	public string GetIconPath()
 	{
-		// UPGRADE: In Godot 4.2, for-loop variables can be
-		// statically typed:
-		// for button:Button in button_nodes:
 		foreach( Button button in ButtonNodes )
 		{
-			if( button.ButtonPressed )
-				return ( button.Icon as ControllerIconTexture ).path;
+			if( !button.ButtonPressed )
+				continue;
+
+			if( !string.IsNullOrEmpty(MotionOverridePath)
+				&& ( button == GetNode<Button>("%LStick") || button == GetNode<Button>("%RStick") ) )
+				return MotionOverridePath;
+
+			return ( button.Icon as ControllerIconTexture ).path;
 		}
 
 		return "";
@@ -71,17 +76,39 @@ public partial class JoypadPathSelector : SelectorPanel
 		switch( e.Axis )
 		{
 			case JoyAxis.LeftX:
-			case JoyAxis.LeftY:
+				MotionOverridePath = e.AxisValue < 0 ? "joypad/l_stick_left" : "joypad/l_stick_right";
 				SimulateButtonPress(GetNode<Button>("%LStick"));
+				ButtonLabel.Text = e.AxisValue < 0
+					? "Axis 0-\n(Left Stick Left)\n[joypad/l_stick_left]"
+					: "Axis 0+\n(Left Stick Right)\n[joypad/l_stick_right]";
+				break;
+			case JoyAxis.LeftY:
+				MotionOverridePath = e.AxisValue < 0 ? "joypad/l_stick_up" : "joypad/l_stick_down";
+				SimulateButtonPress(GetNode<Button>("%LStick"));
+				ButtonLabel.Text = e.AxisValue < 0
+					? "Axis 1-\n(Left Stick Up)\n[joypad/l_stick_up]"
+					: "Axis 1+\n(Left Stick Down)\n[joypad/l_stick_down]";
 				break;
 			case JoyAxis.RightX:
-			case JoyAxis.RightY:
+				MotionOverridePath = e.AxisValue < 0 ? "joypad/r_stick_left" : "joypad/r_stick_right";
 				SimulateButtonPress(GetNode<Button>("%RStick"));
+				ButtonLabel.Text = e.AxisValue < 0
+					? "Axis 2-\n(Right Stick Left)\n[joypad/r_stick_left]"
+					: "Axis 2+\n(Right Stick Right)\n[joypad/r_stick_right]";
+				break;
+			case JoyAxis.RightY:
+				MotionOverridePath = e.AxisValue < 0 ? "joypad/r_stick_up" : "joypad/r_stick_down";
+				SimulateButtonPress(GetNode<Button>("%RStick"));
+				ButtonLabel.Text = e.AxisValue < 0
+					? "Axis 3-\n(Right Stick Up)\n[joypad/r_stick_up]"
+					: "Axis 3+\n(Right Stick Down)\n[joypad/r_stick_down]";
 				break;
 			case JoyAxis.TriggerLeft:
+				MotionOverridePath = "";
 				SimulateButtonPress(GetNode<Button>("%LT"));
 				break;
 			case JoyAxis.TriggerRight:
+				MotionOverridePath = "";
 				SimulateButtonPress(GetNode<Button>("%RT"));
 				break;
 		}
@@ -90,6 +117,7 @@ public partial class JoypadPathSelector : SelectorPanel
 	private void InputButton( InputEventJoypadButton e )
 	{
 		if( !e.Pressed ) return;
+		MotionOverridePath = "";
 
 		switch( e.ButtonIndex )
 		{
@@ -166,6 +194,9 @@ public partial class JoypadPathSelector : SelectorPanel
 
 			if( button.ButtonPressed )
 			{
+				if( button != GetNode<Button>("%LStick") && button != GetNode<Button>("%RStick") )
+					MotionOverridePath = "";
+
 				if( LastPressedButton == button )
 				{
 					if (Time.GetTicksMsec() < LastPressedTimestamp)
@@ -192,21 +223,29 @@ public partial class JoypadPathSelector : SelectorPanel
 
 	private void _on_l_stick_pressed()
 	{
-		ButtonLabel.Text = "Axis 0/1\n(Left Stick, Joystick 0)\n[joypad/l_stick]";
+		if( (bool)GetNode<Button>("%LStick").GetMeta("from_ui", true) )
+			MotionOverridePath = "";
+		if( string.IsNullOrEmpty(MotionOverridePath) )
+			ButtonLabel.Text = "Axis 0/1\n(Left Stick, Joystick 0)\n[joypad/l_stick]";
 	}
 
 	private void _on_l_stick_click_pressed()
 	{
+		MotionOverridePath = "";
 		ButtonLabel.Text = "Button 7\n(Left Stick, Sony L3, Xbox L/LS)\n[joypad/l_stick_click]";
 	}
 	
 	private void _on_r_stick_pressed()
 	{
-		ButtonLabel.Text = "Axis 2/3\n(Right Stick, Joystick 1)\n[joypad/r_stick]";
+		if( (bool)GetNode<Button>("%RStick").GetMeta("from_ui", true) )
+			MotionOverridePath = "";
+		if( string.IsNullOrEmpty(MotionOverridePath) )
+			ButtonLabel.Text = "Axis 2/3\n(Right Stick, Joystick 1)\n[joypad/r_stick]";
 	}
 	
 	private void _on_r_stick_click_pressed()
 	{
+		MotionOverridePath = "";
 		ButtonLabel.Text = "Button 8\n(Right Stick, Sony R3, Xbox R/RS)\n[joypad/r_stick_click]";
 	}
 	

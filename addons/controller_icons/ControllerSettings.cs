@@ -7,18 +7,11 @@ public partial class ControllerSettings : Resource
 	public enum Devices
 	{
 		NONE = -1,
-		LUNA,
-		OUYA,
-		PS3,
-		PS4,
+		XBOXSERIES,
 		PS5,
-		STADIA,
 		STEAM,
 		SWITCH,
 		JOYCON,
-		XBOX360,
-		XBOXONE,
-		XBOXSERIES,
 		STEAM_DECK
 	}
 
@@ -28,7 +21,7 @@ public partial class ControllerSettings : Resource
 	// Controller type to fallback to if automatic
 	// controller detection fails
 	[Export]
-	public Devices joypad_fallback = Devices.XBOX360;
+	public Devices joypad_fallback = Devices.XBOXSERIES;
 
 	// Controller deadzone for triggering an icon remap when input
 	// is analogic (movement sticks or triggers)

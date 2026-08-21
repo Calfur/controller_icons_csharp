@@ -621,6 +621,24 @@ public partial class ControllerIcons : Node
 			"r_stick_click" => "right stick click",
 			"l_stick" => "left stick",
 			"r_stick" => "right stick",
+			"l_stick_up" => "left stick up",
+			"l_stick_down" => "left stick down",
+			"l_stick_left" => "left stick left",
+			"l_stick_right" => "left stick right",
+			"l_stick_horizontal" => "left stick horizontal",
+			"l_stick_vertical" => "left stick vertical",
+			"r_stick_up" => "right stick up",
+			"r_stick_down" => "right stick down",
+			"r_stick_left" => "right stick left",
+			"r_stick_right" => "right stick right",
+			"r_stick_horizontal" => "right stick horizontal",
+			"r_stick_vertical" => "right stick vertical",
+			"stick" => "stick",
+			"stick_up" => "stick up",
+			"stick_down" => "stick down",
+			"stick_left" => "stick left",
+			"stick_right" => "stick right",
+			"stick_click" => "stick click",
 			_ => path,
 		};
 	}
@@ -644,7 +662,7 @@ public partial class ControllerIcons : Node
 		else if( e is InputEventJoypadButton joypadButtonEvent )
 			return ConvertJoypadButtonToPath(joypadButtonEvent.ButtonIndex, controller, forcedControllerIconStyle);
 		else if( e is InputEventJoypadMotion joypadMotionEvent )
-			return ConvertJoypadMotionToPath(joypadMotionEvent.Axis, controller, forcedControllerIconStyle);
+			return ConvertJoypadMotionToPath(joypadMotionEvent.Axis, joypadMotionEvent.AxisValue, controller, forcedControllerIconStyle);
 
 		return "";
 	}
@@ -837,18 +855,22 @@ public partial class ControllerIcons : Node
 		return Mapper.ConvertJoypadPath(path, controller, Settings.joypad_fallback, forcedControllerIconStyle);
 	}
 
-	private string ConvertJoypadMotionToPath(JoyAxis axis, int controller, ControllerSettings.Devices forcedControllerIconStyle = ControllerSettings.Devices.NONE)
+	private string ConvertJoypadMotionToPath(JoyAxis axis, float axisValue, int controller, ControllerSettings.Devices forcedControllerIconStyle = ControllerSettings.Devices.NONE)
 	{
 		string path;
 		switch( axis )
 		{
 			case JoyAxis.LeftX:
+				path = axisValue < 0 ? "joypad/l_stick_left" : "joypad/l_stick_right";
+				break;
 			case JoyAxis.LeftY:
-				path = "joypad/l_stick";
+				path = axisValue < 0 ? "joypad/l_stick_up" : "joypad/l_stick_down";
 				break;
 			case JoyAxis.RightX:
+				path = axisValue < 0 ? "joypad/r_stick_left" : "joypad/r_stick_right";
+				break;
 			case JoyAxis.RightY:
-				path = "joypad/r_stick";
+				path = axisValue < 0 ? "joypad/r_stick_up" : "joypad/r_stick_down";
 				break;
 			case JoyAxis.TriggerLeft:
 				path = "joypad/lt";

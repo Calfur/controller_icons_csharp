@@ -9,19 +9,12 @@ public partial class ControllerMapper : RefCounted
 	{
 		return GetJoypadType(device, fallback, forceControllerIconStyle) switch
 		{
-			ControllerSettings.Devices.LUNA => ConvertJoypadToLuna(path),
-			ControllerSettings.Devices.PS3 => ConvertJoypadToPS3(path),
-			ControllerSettings.Devices.PS4 => ConvertJoypadToPS4(path),
 			ControllerSettings.Devices.PS5 => ConvertJoypadToPS5(path),
-			ControllerSettings.Devices.STADIA => ConvertJoypadToStadia(path),
 			ControllerSettings.Devices.STEAM => ConvertJoypadToSteam(path),
 			ControllerSettings.Devices.SWITCH => ConvertJoypadToSwitch(path),
 			ControllerSettings.Devices.JOYCON => ConvertJoypadToJoycon(path),
-			ControllerSettings.Devices.XBOX360 => ConvertJoypadToXbox360(path),
-			ControllerSettings.Devices.XBOXONE => ConvertJoypadToXboxOne(path),
 			ControllerSettings.Devices.XBOXSERIES => ConvertJoypadToXboxSeries(path),
 			ControllerSettings.Devices.STEAM_DECK => ConvertJoypadToSteamDeck(path),
-			ControllerSettings.Devices.OUYA => ConvertJoypadToOuya(path),
 			_ => "",
 		};
 	}
@@ -48,48 +41,30 @@ public partial class ControllerMapper : RefCounted
 			device = available.First();
 
 		string controllerName = Input.GetJoyName(device);
-		if( controllerName.Contains("Luna Controller") )
-			return ControllerSettings.Devices.LUNA;
-		else if( controllerName.Contains("PS3 Controller") )
-			return ControllerSettings.Devices.PS3;
-		else if( controllerName.Contains("PS4 Controller") || controllerName.Contains("DUALSHOCK 4") )
-			return ControllerSettings.Devices.PS4;
-		else if( controllerName.Contains("PS5 Controller") || controllerName.Contains("DualSense") )
+		if( controllerName.Contains("PS3 Controller")
+			|| controllerName.Contains("PS4 Controller")
+			|| controllerName.Contains("DUALSHOCK 4")
+			|| controllerName.Contains("PS5 Controller")
+			|| controllerName.Contains("DualSense") )
 			return ControllerSettings.Devices.PS5;
-		else if( controllerName.Contains("Stadia Controller") )
-			return ControllerSettings.Devices.STADIA;
 		else if( controllerName.Contains("Steam Controller") )
 			return ControllerSettings.Devices.STEAM;
 		else if( controllerName.Contains("Switch Controller") || controllerName.Contains("Switch Pro Controller") )
 			return ControllerSettings.Devices.SWITCH;
 		else if( controllerName.Contains("Joy-Con") )
 			return ControllerSettings.Devices.JOYCON;
-		else if( controllerName.Contains("Xbox 360 Controller") )
-			return ControllerSettings.Devices.XBOX360;
-		else if( controllerName.Contains("Xbox One") || controllerName.Contains("X-Box One") || controllerName.Contains("Xbox Wireless Controller") )
-			return ControllerSettings.Devices.XBOXONE;
-		else if( controllerName.Contains("Xbox Series") )
+		else if( controllerName.Contains("Xbox 360 Controller")
+			|| controllerName.Contains("Xbox One")
+			|| controllerName.Contains("X-Box One")
+			|| controllerName.Contains("Xbox Wireless Controller")
+			|| controllerName.Contains("Xbox Series") )
 			return ControllerSettings.Devices.XBOXSERIES;
 		else if( controllerName.Contains("Steam Deck") || controllerName.Contains("Steam Virtual Gamepad") )
 			return ControllerSettings.Devices.STEAM_DECK;
-		else if( controllerName.Contains("OUYA Controller") )
-			return ControllerSettings.Devices.OUYA;
 		else
 			return fallback;
 	}
 
-
-	public string ConvertJoypadToLuna( string path )
-	{
-		path = path.Replace("joypad", "luna");
-		return path.Substring(path.Find("/") + 1) switch
-		{
-			"select" => path.Replace("/select", "/circle"),
-			"start" => path.Replace("/start", "/menu"),
-			"share" => path.Replace("/share", "/microphone"),
-			_ => path,
-		};
-	}
 
 	public string ConvertJoypadToPlaystation( string path )
 	{
@@ -107,23 +82,6 @@ public partial class ControllerMapper : RefCounted
 		};
 	}
 
-	public string ConvertJoypadToPS3( string path )
-	{
-		return ConvertJoypadToPlaystation( path.Replace("joypad", "ps3") );
-	}
-
-	public string ConvertJoypadToPS4( string path )
-	{
-		path = ConvertJoypadToPlaystation(path.Replace("joypad", "ps4"));
-		return path.Substring(path.Find("/") + 1) switch
-		{
-			"select" => path.Replace("/select", "/share"),
-			"start" => path.Replace("/start", "/options"),
-			"share" => path.Replace("/share", "/"),
-			_ => path,
-		};
-	}
-
 	public string ConvertJoypadToPS5(string path)
 	{
 		path = ConvertJoypadToPlaystation(path.Replace("joypad", "ps5"));
@@ -131,34 +89,17 @@ public partial class ControllerMapper : RefCounted
 		{
 			"select" => path.Replace("/select", "/share"),
 			"start" => path.Replace("/start", "/options"),
-			"home" => path.Replace("/home", "/assistant"),
 			"share" => path.Replace("/share", "/microphone"),
 			_ => path,
 		};
 	}
-
-	public string ConvertJoypadToStadia( string path )
-	{
-		path = path.Replace("joypad", "stadia");
-		return path.Substring(path.Find("/") + 1) switch
-		{
-			"lb" => path.Replace("/lb", "/l1"),
-			"rb" => path.Replace("/rb", "/r1"),
-			"lt" => path.Replace("/lt", "/l2"),
-			"rt" => path.Replace("/rt", "/r2"),
-			"select" => path.Replace("/select", "/dots"),
-			"start" => path.Replace("/start", "/menu"),
-			"share" => path.Replace("/share", "/select"),
-			_ => path,
-		};
-	}
-
 
 	public string ConvertJoypadToSteam( string path )
 	{
 		path = path.Replace("joypad", "steam");
 		return path.Substring(path.Find("/") + 1) switch
 		{
+			"l_stick_click" => path.Replace("/l_stick_click", "/stick_click"),
 			"r_stick_click" => path.Replace("/r_stick_click", "/right_track_center"),
 			"select" => path.Replace("/select", "/back"),
 			"home" => path.Replace("/home", "/system"),
@@ -168,7 +109,17 @@ public partial class ControllerMapper : RefCounted
 			"dpad_left" => path.Replace("/dpad_left", "/left_track_left"),
 			"dpad_right" => path.Replace("/dpad_right", "/left_track_right"),
 			"l_stick" => path.Replace("/l_stick", "/stick"),
+			"l_stick_up" => path.Replace("/l_stick_up", "/stick_up"),
+			"l_stick_down" => path.Replace("/l_stick_down", "/stick_down"),
+			"l_stick_left" => path.Replace("/l_stick_left", "/stick_left"),
+			"l_stick_right" => path.Replace("/l_stick_right", "/stick_right"),
+			"l_stick_horizontal" => path.Replace("/l_stick_horizontal", "/stick_horizontal"),
+			"l_stick_vertical" => path.Replace("/l_stick_vertical", "/stick_vertical"),
 			"r_stick" => path.Replace("/r_stick", "/right_track"),
+			"r_stick_up" => path.Replace("/r_stick_up", "/right_track_up"),
+			"r_stick_down" => path.Replace("/r_stick_down", "/right_track_down"),
+			"r_stick_left" => path.Replace("/r_stick_left", "/right_track_left"),
+			"r_stick_right" => path.Replace("/r_stick_right", "/right_track_right"),
 			_ => path,
 		};
 	}
@@ -207,17 +158,6 @@ public partial class ControllerMapper : RefCounted
 		};
 	}
 
-
-	public string ConvertJoypadToXbox360( string path )
-	{
-		path = path.Replace("joypad", "xbox360");
-		return path.Substring(path.Find("/") + 1) switch
-		{
-			"select" => path.Replace("/select", "/back"),
-			_ => path,
-		};
-	}
-
 	public string ConvertJoypadToXboxModern(string path)
 	{
 		return path.Substring(path.Find("/") + 1) switch
@@ -226,11 +166,6 @@ public partial class ControllerMapper : RefCounted
 			"start" => path.Replace("/start", "/menu"),
 			_ => path,
 		};
-	}
-
-	public string ConvertJoypadToXboxOne(string path)
-	{
-		return ConvertJoypadToXboxModern(path.Replace("joypad", "xboxone"));
 	}
 
 	public string ConvertJoypadToXboxSeries(string path)
@@ -251,24 +186,6 @@ public partial class ControllerMapper : RefCounted
 			"start" => path.Replace("/start", "/menu"),
 			"home" => path.Replace("/home", "/steam"),
 			"share" => path.Replace("/share", "/dots"),
-			_ => path,
-		};
-	}
-
-	public string ConvertJoypadToOuya(string path)
-	{
-		path = path.Replace("joypad", "ouya");
-		return path.Substring(path.Find("/") + 1) switch
-		{
-			"a" => path.Replace("/a", "/o"),
-			"x" => path.Replace("/x", "/u"),
-			"b" => path.Replace("/b", "/a"),
-			"lb" => path.Replace("/lb", "/l1"),
-			"rb" => path.Replace("/rb", "/r1"),
-			"lt" => path.Replace("/lt", "/l2"),
-			"rt" => path.Replace("/rt", "/r2"),
-			"start" => path.Replace("/start", "/menu"),
-			"share" => path.Replace("/share", "/microphone"),
 			_ => path,
 		};
 	}
