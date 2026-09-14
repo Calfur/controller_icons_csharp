@@ -16,3 +16,6 @@ mono_crash.*.json
 
 # Editors
 .idea/**
+
+# macOS Finder metadata
+.DS_Store

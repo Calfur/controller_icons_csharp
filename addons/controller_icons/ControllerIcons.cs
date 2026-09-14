@@ -42,7 +42,7 @@ public partial class ControllerIcons : Node
 	public EInputType LastInputType = EInputType.KEYBOARD_MOUSE;
 	public int LastController;
 	public ControllerSettings Settings;
-	public string BaseExtension = "png";
+	public string BaseExtension = "svg";
 
 	// Custom mouse velocity calculation, because Godot
 	// doesn't implement it on some OSes apparently
