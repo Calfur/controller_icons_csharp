@@ -6,112 +6,111 @@
 // @deprecated
 
 using Godot;
-using System;
-using System.Collections.Generic;
 using static ControllerIcons;
 
 [Tool]
 public partial class ControllerButton : Button
 {
-	public override string[] _GetConfigurationWarnings()
-	{
-		return new string[]{ "This node is deprecated, and will be removed in a future version.\n\nRemove this script and use the new ControllerIconTexture resource\nby setting it directly in Button's icon property." };
-	}	
+    public override string[] _GetConfigurationWarnings()
+    {
+        return new string[] { "This node is deprecated, and will be removed in a future version.\n\nRemove this script and use the new ControllerIconTexture resource\nby setting it directly in Button's icon property." };
+    }
 
-	[Export]
-	public string path
-	{
-		get { return _path; }
-		set
-		{
-			_path = value;
-			
-			if( IsInsideTree() && IsControllerIconsPluginReady() )
-			{
-				Icon = CI.ParsePath(path, force_type);
-			}
-		}
-	}
-	private string _path = "";
+    [Export]
+    public string path
+    {
+        get { return _path; }
+        set
+        {
+            _path = value;
 
-	[Export]
-	public EShowMode show_only {
-		get 
-		{
-			return _show_only;
-		}
+            if (IsInsideTree() && IsControllerIconsPluginReady())
+            {
+                Icon = CI.ParsePath(path, force_type);
+            }
+        }
+    }
+    private string _path = "";
 
-		set
-		{
-			_show_only = value;
-			
-			if( IsControllerIconsPluginReady() )
-				OnInputTypeChanged((int)CI.LastInputType, CI.LastController);
-		}
-	}
-	private EShowMode _show_only = EShowMode.ANY;
+    [Export]
+    public EShowMode show_only
+    {
+        get
+        {
+            return _show_only;
+        }
 
-	[Export]
-	public EInputType force_type
-	{
-		get
-		{
-			return _force_type;
-		}
+        set
+        {
+            _show_only = value;
 
-		set
-		{
-			_force_type = value;
+            if (IsControllerIconsPluginReady())
+                OnInputTypeChanged((int)CI.LastInputType, CI.LastController);
+        }
+    }
+    private EShowMode _show_only = EShowMode.ANY;
 
-			if( IsControllerIconsPluginReady() )
-				OnInputTypeChanged((int)CI.LastInputType, CI.LastController);
-		}
-	}
-	private EInputType _force_type = EInputType.NONE;
+    [Export]
+    public EInputType force_type
+    {
+        get
+        {
+            return _force_type;
+        }
 
-	public override void _Ready()
-	{
-		if( IsControllerIconsPluginReady() )
-		{
-			Setup();
-		}
-		else
-		{
-			RenderingServer.FramePostDraw += OnFramePostDraw;
-		}
-	}
+        set
+        {
+            _force_type = value;
 
-	private void Setup()
-	{
-		CI.InputTypeChanged += OnInputTypeChanged;
-		this.path = path;
-	}
+            if (IsControllerIconsPluginReady())
+                OnInputTypeChanged((int)CI.LastInputType, CI.LastController);
+        }
+    }
+    private EInputType _force_type = EInputType.NONE;
 
-	private void OnFramePostDraw()
-	{
-		if( IsControllerIconsPluginReady() )
-		{
-			RenderingServer.FramePostDraw -= OnFramePostDraw;
-			Setup();
-		}
-	}
+    public override void _Ready()
+    {
+        if (IsControllerIconsPluginReady())
+        {
+            Setup();
+        }
+        else
+        {
+            RenderingServer.FramePostDraw += OnFramePostDraw;
+        }
+    }
 
-	public void OnInputTypeChanged( int inputType, int controller )
-	{
-		if( show_only == EShowMode.ANY ||
-			(show_only == EShowMode.KEYBOARD_MOUSE && (EInputType)inputType == EInputType.KEYBOARD_MOUSE) ||
-			(show_only == EShowMode.CONTROLLER && (EInputType)inputType == EInputType.CONTROLLER))
-		{
-			Visible = true;
-			this.path = path;
-		}
-		else
-			Visible = false;
-	}
+    private void Setup()
+    {
+        CI.InputTypeChanged += OnInputTypeChanged;
+        this.path = path;
+    }
 
-	private string GetTTSString()
-	{
-		return CI.ParsePathToTTS(path, force_type);
-	}	
+    private void OnFramePostDraw()
+    {
+        if (IsControllerIconsPluginReady())
+        {
+            RenderingServer.FramePostDraw -= OnFramePostDraw;
+            Setup();
+        }
+    }
+
+    public void OnInputTypeChanged(int inputType, int controller)
+    {
+        if (show_only == EShowMode.ANY ||
+            (show_only == EShowMode.KEYBOARD_MOUSE && (EInputType)inputType == EInputType.KEYBOARD_MOUSE) ||
+            (show_only == EShowMode.CONTROLLER && (EInputType)inputType == EInputType.CONTROLLER))
+        {
+            Visible = true;
+            this.path = path;
+        }
+        else
+            Visible = false;
+    }
+
+    private string GetTTSString()
+    {
+        return CI.ParsePathToTTS(path, force_type);
+    }
 
 }
